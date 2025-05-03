@@ -4,6 +4,8 @@ INCLUDE proto.inc
 
 ; -------------------------------------
 ; CheckWinner - Checks if a player has won
+; In eax return winning status "1"
+; and in ebx the winning symbol "X" or "O"
 ; -------------------------------------
 CheckWinner PROC, boardPtr:ptr BYTE
     ; Check rows
@@ -26,7 +28,7 @@ check_rows:
     jne next_row
     mov ebx,eax
     mov eax,1
-    ret                     ; Winner found, return the winning symbol in eax
+    ret                     ; Winner found, return the winning status in eax
 next_row:
     inc ecx
     jmp check_rows
@@ -47,7 +49,7 @@ check_cols_loop:
     jne next_col
     mov ebx,eax
     mov eax,1
-    ret                     ; Winner found, return the winning symbol in eax
+    ret                     ; Winner found, return the winning status in eax
 next_col:
     inc ecx
     jmp check_cols_loop
@@ -66,7 +68,7 @@ check_diagonals:
     jne check_other_diag
     mov ebx,eax
     mov eax,1
-    ret                     ; Winner found, return the winning symbol in eax
+    ret                     ; Winner found, return the winning status in eax
 
 check_other_diag:
     movzx eax, BYTE PTR [edi + 2]
@@ -80,7 +82,7 @@ check_other_diag:
     jne no_winner
     mov ebx,eax
     mov eax,1
-    ret                     ; Winner found, return the winning symbol in eax
+    ret                     ; Winner found, return the winning status in eax
 
 no_winner:
     xor eax, eax            ; No winner
