@@ -266,7 +266,13 @@ ai_turn:
 
 ai_game_end:
     call CrLf
-    mov edx, OFFSET msgGameOver
+    cmp bl, HUMAN
+    je ai_human_win
+    mov edx, OFFSET msgAIWin
+    jmp unCond
+ai_human_win:
+    mov edx, OFFSET msgHumanWin
+    unCond:
     call WriteString
     call CrLf
     ret
